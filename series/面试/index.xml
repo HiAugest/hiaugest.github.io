@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>面试 on 八月的博客</title>
+    <link>https://hiaugest.github.io/series/%E9%9D%A2%E8%AF%95/</link>
+    <description>Recent content in 面试 on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:11:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/series/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAVA基础面试题汇总</title>
+      <link>https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 26 Sep 2019 16:11:30 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</guid>
+      <description>[TOC]
+面试题汇总 JAVAWeb部分 1.cs与bs（面试题） cs（client/server）架构：QQ 优点：服务器稳定，安全性高 缺点：必须下载客户端，更新需要重新下载 bs（broswer/server）架构：淘宝 优点：不需下载客户端，无需更新 缺点：服务器不稳定，安全性不高
+2.post与get区别（面试题） get请求： 参数提交到url地址栏上，不安全，数据量有大小限制（2kb左右） 使用情况：1.表单中默认提交2.地址栏中直接输入地址3.超链接 post请求： 参数在数据包中(http协议) ，相对安全，对提交的数据没有大小限制（） 使用情况：设置表单提交方式的时候</description>
+    </item>
+    
+    <item>
+      <title>遍历当前目录下的所有文件</title>
+      <link>https://hiaugest.github.io/posts/%E9%81%8D%E5%8E%86%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Thu, 26 Sep 2019 16:03:02 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/%E9%81%8D%E5%8E%86%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6/</guid>
+      <description>1.遍历当前目录下的所有文件 这种遍历题一般要使用递归来解决。因为思路简单，代码不复杂，执行效率高等三大优点，但比较吃内存。
+/* * 解题思路 * 设计一个方法 该方法用于找出一个文件夹中的所有文件 * 1.拿到文件夹中所有的文件对象 * 2.判断文件对象是否是文件或者文件夹 * 3.如果是文件就进行输出名字 * 4.</description>
+    </item>
+    
+  </channel>
+</rss>

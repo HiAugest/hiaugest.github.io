@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.58.3" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>JAVAEE Servlet | 八月的博客</title>
+    <meta property="og:title" content="JAVAEE Servlet - 八月的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-09-26T16:08:17&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-09-26T16:08:17&#43;08:00">
+        
+    <meta name="Keywords" content="八月呀,它是我八月十五日在外面捡到的流浪猫">
+    <meta name="description" content="JAVAEE Servlet">
+        
+    <meta name="author" content="八月">
+    <meta property="og:url" content="https://hiaugest.github.io/posts/JAVAEE-Servlet/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://hiaugest.github.io/">
+                        八月的博客
+                    </a>
+                
+                <p class="description">你好八月</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://hiaugest.github.io/">首页</a>
+                    
+                    <a  href="https://hiaugest.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://hiaugest.github.io/about/" title="关于我">关于我</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">JAVAEE Servlet</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年9月26日
+                            16:08
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            ，归类于
+                            
+                                <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93">个人总结</a>
+                            
+                                <a href="/categories/java%E5%9F%BA%E7%A1%80">java基础</a>
+                            
+                        </div>
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="servlet">servlet</h1>
+
+<h2 id="定义">定义</h2>
+
+<p>是一个规范，需要服务器厂商去实现</p>
+
+<h2 id="servlet的生命周期-从出生到销毁">Servlet的生命周期（从出生到销毁）</h2>
+
+<p>构造方法 &ndash;&gt; init方法 &ndash;&gt; service【每次请求都会执行】 &ndash;&gt; destory【正常关闭才执行】
+出生（实例化和初始化）：实质是由servlet容器去调用构造器，调用init方法？
+    什么时候调用？默认实在第一次访问的时候调用
+    只调用一次
+服务：servlet容器通过上面创建的对象去调用service方法,什么时候调用？发送请求的时候
+    调用多次
+销毁：servlet容器调用destroy方法，服务器正常关闭的时候调用</p>
+
+<h2 id="三大职责-流程-重点">三大职责/流程（重点）</h2>
+
+<p>可以处理web的动态资源，拓展了web服务器的功能组件
+1.接收请求参数（封装） ：<strong>jsp页面完成接收参数传递给功能页面</strong>
+2.调用业务方法处理业务（去调用业务层）：<strong>功能页面（处理参数并把参数共享）</strong>
+3.响应请求（跳转页面或其他Servlet）：<strong>（转发和重定向来响应数据给页面）</strong>
+<strong>为什么需要跳转和数据共享？</strong>
+跳转：需要做责任分离（Servlet擅长写代码即处理业务逻辑，jsp擅长展示页面）；
+共享：Http是无状态的，我们跳转的时候数据无法传递，因此需要做数据共享；</p>
+
+<h2 id="跳转页面">跳转页面</h2>
+
+<p>转发方法（forward）：
+req.getRequestDispatcher(&ldquo;路径&rdquo;).forward(request, response);
+重定向方法（redirect）：
+resp.sendRedirect(&ldquo;路径&rdquo;);//直接跳转</p>
+
+<h3 id="区别">区别</h3>
+
+<p><strong>相同点</strong>
+都是用来跳转页面，需要做责任分离
+<strong>不同点</strong>
+<strong>请求次数不同</strong>：转发一次，重定向多次
+请求后地址栏不同：转发不变，重定向会改变
+数据包（数据）共享不同：转发可以共享数据，重定向不共享数据
+访问外部页面（引用）不同：转发不能，重定向可以
+<strong>WEB-INF中信息只能转发访问</strong></p>
+
+<h2 id="jsp-java-server-page">JSP(java server page)</h2>
+
+<h3 id="含义">含义：</h3>
+
+<p>java服务端的页面，<strong>本质是一个servlet</strong></p>
+
+<h3 id="作用">作用</h3>
+
+<p>及那个后台逻辑代码与前台网页代码分离开，提高开发效率</p>
+
+<h3 id="执行流程">执行流程</h3>
+
+<p>访问JSP&mdash;&gt;首先转换成servlet&mdash;&gt;同样经历servlet的生命周期（实例化，初始化，服务，销毁）</p>
+
+<h3 id="代码示意-jsp中的java代码以后都由el和jstl代替">代码示意(jsp中的java代码以后都由el和jstl代替)</h3>
+
+<pre><code class="language-jsp">&lt;!-- 我是html注释，在源码中可以看见，还可以执行java代码 --&gt;
+&lt;%-- 我是jsp注释，我在源码中不可见，不能执行java代码 --%&gt;
+&lt;!-- jsp申明，不常用，生成servlet时是以成员的方式生成 --&gt;
+&lt;%! int num = 1;
+public void c(){
+	System.out.println(num);
+}
+%&gt;
+&lt;!-- jsp小脚本,输出态控制台常用，生成servlet时是放在service方法中生成 --&gt;
+&lt;%	
+	int num2=0;
+	for(int i=0;i&lt;5;i++){
+		num2 +=2;
+		System.out.println(num);
+		System.out.println(num2);
+	}
+%&gt;
+&lt;!-- jsp表达式，用于页面输出，，生成servlet时是放在service方法中生成  --&gt;
+&lt;%= num2  %&gt;
+</code></pre>
+
+<h3 id="jsp三大指令">JSP三大指令</h3>
+
+<p><strong>Page指令</strong>： 1.设置页面的编码集2.导入包3.指定错误页面和是否为错误页面</p>
+
+<pre><code class="language-jsp">&lt;%@page import=&quot;java.time.LocalDateTime&quot;%&gt;
+&lt;%@ page pageEncoding=&quot;utf-8&quot; isErrorPage=&quot;false&quot;%&gt;//指定当前页面是否为错误页面
+&lt;%@ page pageEncoding=&quot;utf-8&quot; errorPage=&quot;index.html&quot;%&gt;//指定当前页面错误的话，跳转到指定页面
+</code></pre>
+
+<p><strong>include指令</strong>：包含 其他页面    如果乱码的话，要在导入页面中的最上方加入：
+&lt;%@ page pageEncoding=&ldquo;utf-8&rdquo;%&gt;</p>
+
+<pre><code class="language-jsp">&lt;!-- indlude指令 --&gt;
+	&lt;%@ include file=&quot;index.html&quot; %&gt;
+</code></pre>
+
+<p><strong>taglib（jstl）</strong></p>
+
+<h3 id="errorpage与iserrorpage的区别">errorPage与isErrorPage的区别</h3>
+
+<p><strong>相同点</strong>
+都是用来处理错误页面的
+<strong>不同点</strong>
+errorPage：用来指定错误页面（哪一个页面是错误页面）
+isErrorPage：用于指定当前页面是错误页面</p>
+
+<h3 id="jsp与servlet有什么区别">JSP与Servlet有什么区别</h3>
+
+<p><strong>相同点</strong>
+JSP本质上是一个Servlet
+<strong>不同点</strong>
+JSP注重数据的展示
+Servlet注重业务逻辑代码</p>
+
+<h2 id="jsp九大内置对象">JSP九大内置对象</h2>
+
+<h3 id="jsp处理数据">jsp处理数据</h3>
+
+<p>共享数据：setAttribute(&ldquo;key&rdquo;,&ldquo;value&rdquo;);
+获取数据：getAttribute(&ldquo;key&rdquo;);</p>
+
+<h3 id="分类记忆">分类记忆</h3>
+
+<p>输入输出对象：request  response    out
+作用域通信对象：session application     pagecontext
+servlet对象：page  config
+异常对象:exeception</p>
+
+<h3 id="内置对象说明">内置对象说明</h3>
+
+<p><strong>和作用域一起使用</strong>
+设置数据：request.setAttribute(&ldquo;key&rdquo;, &ldquo;values&rdquo;);
+获取数据：request.getAttribute(&ldquo;key&rdquo;)</p>
+
+<pre><code class="language-java">request.setAttribute(&quot;login&quot;, &quot;内容&quot;);
+&lt;%= request.getAttribute(&quot;login&quot;)
+</code></pre>
+
+<p>out：用于输出
+config:可以获取上下文对象，获取servlet的初始化参数</p>
+
+<h2 id="四大作用域">四大作用域</h2>
+
+<h3 id="作用-1">作用：</h3>
+
+<p>用来共享或传递数据</p>
+
+<h3 id="作用域说明-从小到大">作用域说明（从小到大）</h3>
+
+<p>PageContext：当前页面    作用：使用el表达式可以获取上下文对象
+request：         一次请求   作用：登陆失败/账户密码错误的时候使用
+session：         一次回话   作用：用户登陆成功后，将用户名绑定到sess
+application：   全局对象 作用：公告</p>
+
+<h2 id="javabean">javaBean</h2>
+
+<h3 id="定义-1">定义</h3>
+
+<p>是java的一种可重用的组件
+就是一个特殊（满足一定规范）的类</p>
+
+<h3 id="规范">规范</h3>
+
+<p>1.必须有包
+2.私有化字段
+3.字段有相应的getter(el表达式)和setter的方法
+4.有public修饰的无参构造方法（方便以后：反射.Instance）</p>
+
+<h2 id="实例属性与bean属性">实例属性与bean属性</h2>
+
+<p><strong>实例属性就是：</strong>
+javaBean中的字段
+<strong>bean属性就是：</strong>
+getter和setter上面的属性内容</p>
+
+<h2 id="java中的自省机制">java中的自省机制</h2>
+
+<h3 id="作用-2">作用</h3>
+
+<p>java对bean类属性和方法的默认处理机制</p>
+
+<h3 id="方法">方法</h3>
+
+<p>1.获取BeanInfo对象
+2.获取属性描述器
+3.获取javaBean中的方法内容</p>
+
+<pre><code class="language-java">@Test
+	public void f1() throws Exception{
+		//先获取BeanInfo对象
+		BeanInfo info = Introspector.getBeanInfo(Person.class, Object.class);
+		//获取属性描述器
+		PropertyDescriptor[] descriptors = info.getPropertyDescriptors();
+		for(PropertyDescriptor prop : descriptors){
+			System.out.println(prop);
+			//只获取get方法
+			Method get = prop.getReadMethod();
+			System.out.println(get);
+		}
+</code></pre>
+
+<h3 id="beanutils">BeanUtils</h3>
+
+<p><strong>作用：</strong>
+将一个对象中信息传递给另一个对象，只会传递相对应的参数
+BeanUtils.copyProperties（目标对象，源对象）</p>
+
+<pre><code class="language-java">	//将一个对象的信息 传递给另外一个对象
+	@Test
+	public void f2() throws IllegalAccessException, InvocationTargetException{
+		Person p1 = new Person(1, &quot;tom&quot;, 35, &quot;四川成都&quot;);
+		Person p2 = new Person();
+		BeanUtils.copyProperties(p2, p1);
+		System.out.println(p2);
+	}
+	//输出结果：Person [name=tom, age=35, id=1, addstress=四川成都]
+	
+	//将Map中的信息传递给一个对象
+	@Test
+	public void f3() throws Exception{
+		Map&lt;String, Object&gt; map = new HashMap&lt;String,Object&gt;();
+		map.put(&quot;id&quot;, 1);
+		map.put(&quot;username&quot;, &quot;jack&quot;);
+		map.put(&quot;age&quot;, 18);
+		map.put(&quot;sex&quot;, &quot;男&quot;);
+		//Person [id=1, name=null, age=18, address=洛杉矶]
+ 		Person p = new Person();
+		BeanUtils.copyProperties(p, map);
+		System.out.println(p);
+	}
+	//输出结果：Person [name=jack, age=18, id=1, addstress=null	]
+</code></pre>
+
+<h2 id="el">el</h2>
+
+<h3 id="作用-3">作用</h3>
+
+<p>可以获取四大作用域的共享数据（小到大）</p>
+
+<h3 id="特点">特点</h3>
+
+<p>1.用来和jstl结合使用，代替jsp中的代码
+2.写法简单，逻辑清晰。优雅！！</p>
+
+<h3 id="方法-1">方法</h3>
+
+<p>获取指定作用域的值： 作用域Scope.内容
+获取指定对象中的内容：对象.内容</p>
+
+<pre><code class="language-java">&lt;%
+		pageContext.setAttribute(&quot;name&quot;, &quot;page&quot;);
+		request.setAttribute(&quot;name&quot;, &quot;request&quot;);
+		session.setAttribute(&quot;name&quot;, &quot;session&quot;);
+		application.setAttribute(&quot;name&quot;, &quot;application&quot;);
+		Person p = new Person(&quot;八月&quot;,1,1,&quot;经天路三号院&quot;);
+		request.setAttribute(&quot;p&quot;, p);
+	%&gt;
+	&lt;!-- //获取作用域中的指 --&gt;
+	${name}&lt;/br&gt;
+	&lt;!-- //获取指定作用域中的指 --&gt;
+	${sessionScope.name }&lt;/br&gt;
+	&lt;!-- //获取对象的指 --&gt;
+	${p }&lt;/br&gt;
+	&lt;!-- //获取对象中的特定bean属性值 --&gt;
+	${p.name }&lt;/br&gt;
+</code></pre>
+
+<h2 id="jstl-jsp标准标签库">jstl（jsp标准标签库）</h2>
+
+<p>（jsp standard tag library）jsp标准标签库</p>
+
+<h3 id="作用-4">作用</h3>
+
+<p>为了将jap中的java代码替换掉</p>
+
+<h3 id="使用步骤">使用步骤</h3>
+
+<p>1.导入jstl的2个jar包
+    web工程的jar包一定要放在指定位置（WEB-INF/lib文件夹下）
+ 2.引入jstl的核心标签库
+ &lt;%@ taglib uri=&ldquo;<a href="http://java.sun.com/jsp/jstl/core&quot;">http://java.sun.com/jsp/jstl/core&quot;</a> prefix=&ldquo;c&rdquo; %&gt;
+ 3.使用</p>
+
+<h3 id="三大常用方法">三大常用方法</h3>
+
+<p><c:if>  <c:foreach> <c:choose></p>
+
+<h4 id="c-if">c:if</h4>
+
+<p>相当于java中的if
+test属性：通过el返回的boolean值</p>
+
+<pre><code class="language-java">&lt;% Person p = new Person(&quot;八月&quot;, 1, 1, &quot;经天路三号院&quot;); 
+		request.setAttribute(&quot;p&quot;, p);
+	%&gt;
+	&lt;c:if test=&quot;${p.name=='八月' }&quot; var=&quot;c&quot;&gt;
+	&lt;h1&gt;八月你好&lt;/h1&gt;
+	&lt;/c:if&gt;
+	&lt;c:if test=&quot;${!c }&quot;&gt;
+	&lt;h1&gt;你是谁&lt;/h1&gt;
+	&lt;/c:if&gt;
+</code></pre>
+
+<h4 id="c-foreach">c:forEach</h4>
+
+<p>相当于java中的for each
+items属性：放入el表达式获取集合或数组
+var属性：用于接收每个对象
+varstatus：计数</p>
+
+<pre><code class="language-java">&lt;%
+		List&lt;Person&gt; ps = new ArrayList&lt;Person&gt;();
+		ps.add(new Person(1,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(2,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(3,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(4,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(5,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(6,&quot;jack&quot;,20,&quot;火星&quot;));
+		ps.add(new Person(7,&quot;jack&quot;,20,&quot;火星&quot;));
+		request.setAttribute(&quot;ps&quot;, ps);
+	%&gt;
+	&lt;table&gt;
+		&lt;tr&gt;&lt;td&gt;编号&lt;/td&gt;&lt;td&gt;姓名&lt;/td&gt;&lt;td&gt;年龄&lt;/td&gt;&lt;td&gt;地址&lt;/td&gt;&lt;/tr&gt;
+		&lt;!-- c:forEach:用于遍历的
+			items属性：必须使用el表达式获取作用域绑定的集合或数组
+			var属性：用于接收集合中的每一个对象
+			
+		 --&gt;
+		&lt;c:forEach items=&quot;${ps }&quot; var=&quot;p&quot; begin=&quot;0&quot; end=&quot;5&quot; varStatus=&quot;s&quot;&gt;
+			&lt;tr class=&quot;c${s.count%2 }&quot;&gt;&lt;td&gt;${p.id}&lt;/td&gt;			
+				&lt;td&gt;${p.name}&lt;/td&gt;			
+				&lt;td&gt;${p.age}&lt;/td&gt;			
+				&lt;td&gt;${p.address}&lt;/td&gt;&lt;/tr&gt;
+		&lt;/c:forEach&gt;
+	&lt;/table&gt;
+</code></pre>
+
+<h2 id="总结">总结</h2>
+
+<p>做到责任分离（Servlet用java代码来处理业务逻辑，jsp使用html、el和jstl来展示页面）；</p>
+
+<h3 id="servlet的作用和三大职责">servlet的作用和三大职责</h3>
+
+<p><strong>作用：</strong>可以处理web的动态资源，拓展了web服务器的功能组件
+1.接收请求参数（封装） ：<strong>jsp页面完成接收参数传递给功能页面</strong>
+写jsp页面来代替原本的静态页面。在jsp页面中获取用户传递的参数，并跳转到响应功能页面</p>
+
+<p>2.调用业务方法处理业务（去调用业务层）：<strong>功能页面（处理参数并把参数共享）</strong>
+功能页面用来<strong>接收、处理、共享</strong>
+接收：<strong>接收</strong>jsp传输过来的<strong>参数</strong>
+处理：调用<strong>相应的后台代码</strong>来<strong>处理前台</strong>传过来的<strong>参数</strong>。<strong>得到</strong>一个<strong>结果</strong>
+共享：将<strong>结果共享</strong>出来，方便前台jsp页面接收
+3.响应请求（跳转页面或其他Servlet）：
+在功能页面<strong>（转发和重定向来响应数据给页面）</strong>
+<strong>为什么需要跳转和数据共享？</strong>
+跳转：需要做责任分离（Servlet擅长写代码即处理业务逻辑，jsp擅长展示页面）；
+共享：Http是无状态的，我们跳转的时候数据无法传递，因此需要做数据共享；</p>
+
+<h3 id="el与jstl">el与jstl</h3>
+
+<p>在servlet功能完成后，会得到后台返回和共享出来的信息。
+因为在jsp页面中最好不要出现java代码（责任分离），所以<strong>使用el和jstl</strong>两个功能来完成对后台数据处理（<strong>接收，向页面输出</strong>）</p>
+
+<h3 id="jsp的九大内置对象-四大作用域-一存一取">jsp的九大内置对象、四大作用域、一存一取</h3>
+
+<p><strong>九大内置对象</strong>
+输入输出对象：request  response    out
+作用域通信对象：session application     pagecontext
+servlet对象：page  config
+异常对象:exeception
+<strong>四大作用域</strong>
+PageContext：当前页面    作用：使用el表达式可以获取上下文对象
+request：         一次请求   作用：登陆失败/账户密码错误的时候使用
+session：         一次回话   作用：用户登陆成功后，将用户名绑定到sess
+application：   全局对象 作用：公告
+<strong>一存一取</strong>
+共享数据：setAttribute(&ldquo;key&rdquo;,&ldquo;value&rdquo;);
+获取数据：getAttribute(&ldquo;key&rdquo;);</p>
+
+<h3 id="jstl的三个方法">jstl的三个方法</h3>
+
+<p>c:if&gt;   <c:foreach> <c:choose></p>
+
+                        </div>
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="/tags/servlet">servlet</a></li>
+                                
+                                <li><a href="/tags/%E6%80%BB%E7%BB%93">总结</a></li>
+                                
+                                <li><a href="/tags/java%E5%9F%BA%E7%A1%80">java基础</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                        
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://hiaugest.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%AD/" title="HUGO  将个人博客部署到GitHub中">HUGO  将个人博客部署到GitHub中</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" title="JAVA基础面试题汇总">JAVA基础面试题汇总</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/HUGO-4%E5%8F%A5%E4%BB%A3%E7%A0%81%E8%AE%A9%E4%BD%A0%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="HUGO  4句代码让你搭建个人博客">HUGO  4句代码让你搭建个人博客</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/String%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/" title="String创建对象问题">String创建对象问题</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F/" title="枚举实现单利模式">枚举实现单利模式</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVAEE-Servlet/" title="JAVAEE Servlet">JAVAEE Servlet</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/" title="JDBC连接与事物介绍">JDBC连接与事物介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" title="JAVA反射与配置XML文件操作">JAVA反射与配置XML文件操作</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/" title="IO流总结">IO流总结</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/java8-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="Java8  Lambda表达式">Java8  Lambda表达式</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hugo搭建博客(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/java%E5%9F%BA%E7%A1%80/">java基础(9)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/">面试相关(5)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://hiaugest.github.io/tags/IO%E6%B5%81/">IO流</a>
+    
+    <a href="https://hiaugest.github.io/tags/JDBC/">JDBC</a>
+    
+    <a href="https://hiaugest.github.io/tags/Lambda/">Lambda</a>
+    
+    <a href="https://hiaugest.github.io/tags/Map/">Map</a>
+    
+    <a href="https://hiaugest.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://hiaugest.github.io/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95/">java面试</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95%E9%A2%98/">java面试题</a>
+    
+    <a href="https://hiaugest.github.io/tags/servlet/">servlet</a>
+    
+    <a href="https://hiaugest.github.io/tags/xml%E6%96%87%E4%BB%B6/">xml文件</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E5%8F%8D%E5%B0%84/">反射</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E6%80%BB%E7%BB%93/">总结</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e" title="Android Gradle权威指南">Android Gradle权威指南</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="http://mirrors.flysnow.org/" title="常用开发工具CDN镜像">常用开发工具CDN镜像</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://hiaugest.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://hiaugest.github.io/">八月的博客 By 八月</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        
+        (function () {
+            $("pre code").parent().addClass("line-numbers")
+        }());
+
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'GA ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

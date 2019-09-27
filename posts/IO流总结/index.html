@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.58.3" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>IO流总结 | 八月的博客</title>
+    <meta property="og:title" content="IO流总结 - 八月的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-09-26T16:05:49&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-09-26T16:05:49&#43;08:00">
+        
+    <meta name="Keywords" content="八月呀,它是我八月十五日在外面捡到的流浪猫">
+    <meta name="description" content="IO流总结">
+        
+    <meta name="author" content="八月">
+    <meta property="og:url" content="https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://hiaugest.github.io/">
+                        八月的博客
+                    </a>
+                
+                <p class="description">你好八月</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://hiaugest.github.io/">首页</a>
+                    
+                    <a  href="https://hiaugest.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://hiaugest.github.io/about/" title="关于我">关于我</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">IO流总结</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年9月26日
+                            16:05
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            ，归类于
+                            
+                                <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93">个人总结</a>
+                            
+                                <a href="/categories/java%E5%9F%BA%E7%A1%80">java基础</a>
+                            
+                        </div>
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="io流">IO流</h1>
+
+<h2 id="1-大致分类">1.大致分类</h2>
+
+<p>根据<strong>方向</strong>(输入  输出）<strong>单位</strong>(字符  子节）可以分为：
+字节流：字节输入流(FileInputStream)   字节输出流(FileOutputStream)
+字符流：字符输入流(FileReader)    字符输出流(FileWriter)</p>
+
+<p>作为这两个方法的<strong>衍生</strong>和为他们<strong>功能</strong>的补充还添加了：
+转换流：字节转换为字符(InputStreamReader)  字符转换为字节(OutputStreamWriter)
+缓冲流：与字节流和字符流一一对应，为字节输入缓冲流，字节输出缓冲流，字符输入缓冲流，字符输出缓冲流</p>
+
+<h2 id="2-io流的基础使用">2.IO流的基础使用</h2>
+
+<h3 id="2-1-学习重点">2.1<strong>学习重点：</strong></h3>
+
+<p>输入流中主要就是学习   <strong>读取</strong>的方法  <strong>read</strong>
+输出流中主要就是学习   <strong>写出</strong>的方法 <strong>write</strong>
+主要read方法  主要注意其返回值为-1 表示已经读到文件末尾</p>
+
+<h3 id="2-2-使用">2.2 使用</h3>
+
+<p>字节流:主要用来对<strong>影像文件</strong>或者<strong>媒体</strong>进行操作，
+字符流:使用字节流来操作中文容易产生乱码，所以主要用来对<strong>文本文件</strong>进行操作</p>
+
+<h3 id="2-3fileinputstream">2.3FileInputStream</h3>
+
+<p><strong>定义</strong>：
+从文件系统中的某个文件中<strong>获得输入字节</strong>
+ <strong>作用：</strong>
+用于读取诸如图像数据之类的原始字节流
+<strong>注意：</strong>
+一个<strong>英文占一个字节</strong>，一个<strong>中文占两个字节</strong></p>
+
+<h4 id="方法重点">方法重点：</h4>
+
+<p>三个read（）方法，到达文件末尾的返回值为-1
+        1.int read() 从此输入流中读取<strong>一个</strong>数据<strong>字节</strong>。注意返回值是ascii表中的值，因为一次读取的一个字节，但中文占两个字节，会出现乱码。
+        <strong>2.int read(byte[] b) 从此输入流中将最多 b.length 个字节的数据读入一个 byte 数组中。</strong>
+        3. sint read(byte[] b, int off, int len) 从此输入流中将最多 len 个字节的数据读入一个 byte 数组中。</p>
+
+<pre><code class="language-java">public static void main(String[] args) throws Exception {
+		FileInputStream stream = new FileInputStream(&quot;Test.txt&quot;);
+    	//创建一个数组来接收文件内的内容
+		byte[] b = new byte[3];
+		int n = 0;
+    	//当n=-1的时候，就到达了文件末尾
+		while ((n = stream.read(b)) != -1) {
+            //new String（数组，开始位置，结束位置）;
+			System.out.print(new String(b, 0, n));
+		}
+}	
+</code></pre>
+
+<h3 id="2-4fileoutputstream">2.4FileOutputStream</h3>
+
+<p><strong>定义：</strong>
+用于将<strong>数据写入</strong> File 或 FileDescriptor 的输出流
+字节输出流 ： 内存&mdash;》磁盘
+<strong>作用：</strong>
+用于写入诸如图像数据之类的原始字节的流</p>
+
+<h4 id="方法重点-1">方法重点：</h4>
+
+<p>构造方法：
+1.FileOutputStream(String name) 创建一个向具有指定名称的文件中写入数据的输出文件流。<strong>会覆盖原来的内容</strong>
+2.FileOutputStream(String name, boolean append) 创建一个向具有指定 name 的文件中写入数据的输出文件流。如果为<strong>true</strong>表示追加到原有内容末尾
+普通方法：
+3.void write(int b) 将指定字节写入此文件输出流。
+4.void write(byte[] b) 将 b.length 个字节从指定 byte 数组写入此文件输出流中。</p>
+
+<pre><code class="language-java">public static void main(String[] args) throws Exception {
+		// FileOutputStream(String name) 创建一个向具有指定名称的文件中写入数据的输出文件流。
+		 FileOutputStream Stream = new FileOutputStream(&quot;Test.txt&quot;);
+		// void write(int b) 将指定字节写入此文件输出流。
+		// 默认为ascill表的内容
+		 Stream.write(65);
+		// void write(byte[] b) 将 b.length 个字节从指定 byte 数组写入此文件输出流中。
+		 byte[] bs = {76,121,65};
+		 Stream.write(bs);
+		// FileOutputStream(String name, boolean append) 创建一个向具有指定 name 的文件中写入数据的输出文件流。为true添加在文件末尾
+		FileOutputStream Stream = new FileOutputStream(&quot;Test.txt&quot;, true);
+		String string = &quot;唱跳rap&quot;;
+		//把字符串转换为byte数组
+		byte[] bytes = string.getBytes();
+		Stream.write(bytes);
+
+	}
+</code></pre>
+
+<h3 id="2-5-filereader">2.5.FileReader</h3>
+
+<p><strong>定义</strong>
+用于<strong>读取字符流</strong>。要读取原始字节流，请考虑使用 FileInputStream。</p>
+
+<h4 id="方法重点-2">方法重点</h4>
+
+<p>1.int read() 读取单个字符。</p>
+
+<pre><code class="language-java">		/*FileReader(String fileName)   每次读取一个字符
+        在给定从中读取数据的文件名的情况下创建一个新 FileReader。*/
+		FileReader reader = new FileReader(&quot;hello.txt&quot;);
+		int n;
+		//判断n=-1的时候到达了文件末尾
+		while((n=reader.read())!=-1){
+			//强转输出n
+			System.out.print((char)n);
+		}
+</code></pre>
+
+<p>**2.int read(char[] cbuf, int off, int len) 将字符读入数组的某一部分 **</p>
+
+<pre><code class="language-java">		/*FileReader(String fileName)   每次读取一个字符
+        在给定从中读取数据的文件名的情况下创建一个新 FileReader。*/
+		FileReader reader = new FileReader(&quot;hello.txt&quot;);
+		int n;
+		//创建一个char数组来接收字符
+		char[] c = new char[2];
+		while((n=reader.read(c))!=-1){
+			System.out.print(new String(c,0,n));
+		}
+</code></pre>
+
+<h3 id="2-6-filewriter">2.6 FileWriter</h3>
+
+<p>定义
+用于<strong>写入字符流</strong>。要写入原始字节流，请考虑使用 FileOutputStream。
+注意
+字符输出流： 内存&ndash;》缓冲区&mdash;》磁盘
+记住要进行刷新，
+    flush只会刷新 不会关闭流 刷新以后还可以继续操作 <strong>会将缓冲区的数据 刷新到磁盘</strong>
+    close关闭流 也会刷新数据 但是关闭流以后就不能进行操作了 <strong>也会把缓冲区的数据 刷新到磁盘 并且关闭流</strong></p>
+
+<h4 id="方法重点-3">方法重点</h4>
+
+<p>1.void write(char[] cbuf) 写入字符数组。
+**2.void write(String str) 写入字符串。 **</p>
+
+<pre><code class="language-java">		FileWriter writer = new FileWriter(&quot;hello.txt&quot;);
+        
+		char[] c={'奇','怪','了'};
+		//void write(char[] cbuf) 写入字符数组
+		writer.write(c);
+		writer.flush();//刷新 会将缓冲区的数据 刷新到磁盘
+		//writer.close();//也会把缓冲区的数据 刷新到磁盘 并且关闭流
+		//void write(String str) 写入字符串。
+		writer.write(&quot;你们也要稳住要控制自己&quot;);
+		writer.flush();
+</code></pre>
+
+<h2 id="3-转换流">3.转换流</h2>
+
+<h3 id="3-1转换流的特点">3.1转换流的特点：</h3>
+
+<ol>
+<li>其是字符流和字节流之间的桥梁</li>
+<li>可对读取到的字节数据经过指定编码转换成字符</li>
+
+<li><p>可对读取到的字符数据经过指定编码转换成字节</p>
+
+<h3 id="3-2作用">3.2作用：</h3>
+
+<p>1.源或者目的对应的设备是字节流，但是操作的却是文本数据，可以使用转换作为桥梁。提高对文本操作的便捷。
+2.一旦操作文本涉及到具体的指定编码表时，必须使用转换流</p>
+
+<h3 id="3-3代码实现">3.3代码实现</h3>
+
+<p>字节输入流转换为字符流   InputStreamReader
+字符输出流转换为字节流     OutputStreamWriter</p>
+
+<pre><code class="language-java">public class Test {
+	public static void main(String[] args) throws Exception {
+		/*InputStreamReader(InputStream in) 
+    创建一个使用默认字符集的 InputStreamReader。*/
+		FileInputStream stream = new FileInputStream(&quot;hello.txt&quot;);
+		InputStreamReader reader = new InputStreamReader(stream);
+		int read = reader.read();
+		System.out.println((char)read);
+		/*OutputStreamWriter 是字符流通向字节流的桥梁：可使用指定的 charset 将要写入流中的字符编码成字节。*/
+		/*OutputStreamWriter(OutputStream out) 字符流转字节流
+    创建使用默认字符编码的 OutputStreamWriter。*/
+		FileOutputStream outputStream = new FileOutputStream(&quot;hello.txt&quot;);
+		OutputStreamWriter streamWriter = new OutputStreamWriter(outputStream);
+		streamWriter.write(&quot;哈哈哈，我是。。。&quot;);
+		streamWriter.close();
+
+	}
+
+}
+
+</code></pre></li>
+</ol>
+
+<h2 id="4-缓冲流">4.缓冲流</h2>
+
+<h3 id="4-1-特点">4.1 特点</h3>
+
+<p><strong>作用</strong>
+是用户包装其它的流，达到高效的读写 。提高效率
+磁盘===》缓冲区===》用户内存
+<strong>注意</strong>
+关于字符的操作中：都要进行<strong>刷新（flush）或关闭（close）</strong>缓冲流，才能读取和写入内容</p>
+
+<h3 id="4-2-bufferedreader-字符缓冲流">4.2 BufferedReader 字符缓冲流</h3>
+
+<p><strong>常用方法：</strong>
+readLine：读取一个文本行，文本末尾返回值为null
+<strong>作用</strong>
+一般在频繁操作的文件中使用</p>
+
+<pre><code class="language-java">public class BufferInputStreamTest {
+	/*
+	 * 1.频繁操作的文件
+	 * */
+	public static void main(String[] args) throws IOException {
+		/*BufferedInputStream(InputStream in) 
+        创建一个 BufferedInputStream 并保存其参数，即输入流 in，以便将来使用。*/
+		//创建字节输入流
+		FileInputStream inputStream = new  FileInputStream(&quot;hello.txt&quot;);
+		BufferedInputStream stream = new BufferedInputStream(inputStream);
+		int read = stream.read();
+		System.out.println((char)read);
+		/*
+		 * BufferedReader(Reader in) 创建一个使用默认大小输入缓冲区的缓冲字符输入流。
+		 */
+		FileReader reader = new FileReader(&quot;hello.txt&quot;);
+		BufferedReader buffreader = new BufferedReader(reader);
+		// String readLine()   读取一个文本行。  返回值如果为null的时候表示读取到文件末尾了
+		/*String readLine = buffreader.readLine();
+		String readLine1 = buffreader.readLine();
+		String readLine2 = buffreader.readLine();
+		System.out.println(readLine);
+		System.out.println(readLine1);
+		System.out.println(readLine2);*/
+		String content=&quot;&quot;;
+		while((content=buffreader.readLine())!=null){
+			System.out.println(content);
+		}
+	}
+
+}
+
+</code></pre>
+
+<h1 id="总结">总结</h1>
+
+<p>1.针对不同的文件选择不同的IO流，而都需要掌握“读/写”两个功能
+2.字节因为一次性只读一个字节，而中文占两个字节。所以会乱码
+3.对一个文件需要频繁操作，就要使用缓冲流。提高效率</p>
+
+                        </div>
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="/tags/IO%E6%B5%81">IO流</a></li>
+                                
+                                <li><a href="/tags/%E6%80%BB%E7%BB%93">总结</a></li>
+                                
+                                <li><a href="/tags/java%E5%9F%BA%E7%A1%80">java基础</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                        
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://hiaugest.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%AD/" title="HUGO  将个人博客部署到GitHub中">HUGO  将个人博客部署到GitHub中</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" title="JAVA基础面试题汇总">JAVA基础面试题汇总</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/HUGO-4%E5%8F%A5%E4%BB%A3%E7%A0%81%E8%AE%A9%E4%BD%A0%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="HUGO  4句代码让你搭建个人博客">HUGO  4句代码让你搭建个人博客</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/String%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/" title="String创建对象问题">String创建对象问题</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F/" title="枚举实现单利模式">枚举实现单利模式</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVAEE-Servlet/" title="JAVAEE Servlet">JAVAEE Servlet</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/" title="JDBC连接与事物介绍">JDBC连接与事物介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" title="JAVA反射与配置XML文件操作">JAVA反射与配置XML文件操作</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/" title="IO流总结">IO流总结</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/java8-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="Java8  Lambda表达式">Java8  Lambda表达式</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hugo搭建博客(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/java%E5%9F%BA%E7%A1%80/">java基础(9)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/">面试相关(5)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://hiaugest.github.io/tags/IO%E6%B5%81/">IO流</a>
+    
+    <a href="https://hiaugest.github.io/tags/JDBC/">JDBC</a>
+    
+    <a href="https://hiaugest.github.io/tags/Lambda/">Lambda</a>
+    
+    <a href="https://hiaugest.github.io/tags/Map/">Map</a>
+    
+    <a href="https://hiaugest.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://hiaugest.github.io/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95/">java面试</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95%E9%A2%98/">java面试题</a>
+    
+    <a href="https://hiaugest.github.io/tags/servlet/">servlet</a>
+    
+    <a href="https://hiaugest.github.io/tags/xml%E6%96%87%E4%BB%B6/">xml文件</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E5%8F%8D%E5%B0%84/">反射</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E6%80%BB%E7%BB%93/">总结</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e" title="Android Gradle权威指南">Android Gradle权威指南</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="http://mirrors.flysnow.org/" title="常用开发工具CDN镜像">常用开发工具CDN镜像</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://hiaugest.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://hiaugest.github.io/">八月的博客 By 八月</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        
+        (function () {
+            $("pre code").parent().addClass("line-numbers")
+        }());
+
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'GA ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

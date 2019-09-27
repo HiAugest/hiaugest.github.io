@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>IO流 on 八月的博客</title>
+    <link>https://hiaugest.github.io/tags/IO%E6%B5%81/</link>
+    <description>Recent content in IO流 on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:05:49 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/tags/IO%E6%B5%81/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IO流总结</title>
+      <link>https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 26 Sep 2019 16:05:49 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/</guid>
+      <description>IO流 1.大致分类 根据方向(输入 输出）单位(字符 子节）可以分为： 字节流：字节输入流(FileInputStream) 字节输出流(FileOutputStream) 字符流：字符输入流(FileReader) 字符输出流(FileWriter)
+作为这两个方法的衍生和为他们功能的补充还添加了： 转换流：字节转换为字符(InputStreamReader) 字符转换为字节(OutputStreamWriter) 缓冲流：与字节流和字符流一一对应，为字节输入缓冲流，字节输出缓冲流，字符输入缓冲流，字符输出缓冲流
+2.IO流的基础使用 2.</description>
+    </item>
+    
+  </channel>
+</rss>

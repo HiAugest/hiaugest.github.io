@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.58.3" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>JAVA反射与配置XML文件操作 | 八月的博客</title>
+    <meta property="og:title" content="JAVA反射与配置XML文件操作 - 八月的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content="2019-09-26T16:06:41&#43;08:00">
+        
+        
+    <meta property="article:modified_time" content="2019-09-26T16:06:41&#43;08:00">
+        
+    <meta name="Keywords" content="八月呀,它是我八月十五日在外面捡到的流浪猫">
+    <meta name="description" content="JAVA反射与配置XML文件操作">
+        
+    <meta name="author" content="八月">
+    <meta property="og:url" content="https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="/css/normalize.css">
+    
+        <link rel="stylesheet" href="/css/prism.css">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+<body>
+<header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://hiaugest.github.io/">
+                        八月的博客
+                    </a>
+                
+                <p class="description">你好八月</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://hiaugest.github.io/">首页</a>
+                    
+                    <a  href="https://hiaugest.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://hiaugest.github.io/about/" title="关于我">关于我</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div id="body">
+    <div class="container">
+        <div class="col-group">
+
+            <div class="col-8" id="main">
+                <div class="res-cons">
+                    <article class="post">
+                        <header>
+                            <h1 class="post-title">JAVA反射与配置XML文件操作</h1>
+                        </header>
+                        <date class="post-meta meta-date">
+                            2019年9月26日
+                            16:06
+                        </date>
+                        
+                        <div class="post-meta meta-category">
+                            ，归类于
+                            
+                                <a href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93">个人总结</a>
+                            
+                                <a href="/categories/java%E5%9F%BA%E7%A1%80">java基础</a>
+                            
+                        </div>
+                        
+                        <div class="post-content">
+                            
+
+<h1 id="反射与对配置-xml-文件操作">反射与对配置(xml)文件操作</h1>
+
+<h2 id="1-反射">1.反射</h2>
+
+<h3 id="1-1定义">1.1定义</h3>
+
+<p>在程序运行的时候，通过<strong>字节码</strong>文件去获取类中的信息（全部公/私信息：构造方法，方法，字段，注解）</p>
+
+<h3 id="1-2优缺点">1.2优缺点</h3>
+
+<p><strong>优点</strong>
+1.功能强大，灵活
+2.框架底层的设计实现
+<strong>缺点</strong>
+破坏封装.效率一般</p>
+
+<h3 id="1-3获取字节码文件">1.3获取字节码文件</h3>
+
+<p>针对不同的信息有不同的获取方式，<strong>接口和类的字节码文件一般选择：Class.forName(全限定名);包名+类名</strong>
+1.类获得字节码对象
+    1.对象名.getClass();
+    2.类名.class;
+    3.Class.forName(全限定名);
+2.接口获得字节码对象
+    1.接口名.class
+    2.Class.forName(全限定名)
+3.数组获得字节码对象
+    1.数组对象.getClass();
+    2.数组类型[].class
+4.void获得字节码对象
+    void.class;
+5.基本数据类型获得字节码对象
+    1.类型.class
+    2.包装数据类型.TYPE</p>
+
+<pre><code class="language-java">/**
+	 * 类获得字节码文件的对象
+	 * 1.对象名.getClass()
+	 * 2.类名.class
+	 * 3.class.forName(全限定名)
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void getClass1() throws ClassNotFoundException{
+		String string = &quot;帅&quot;;
+		Class&lt;String&gt; class1 = (Class&lt;String&gt;) string.getClass();
+		Class&lt;String&gt; class2 = String.class;
+		Class&lt;String&gt; name = (Class&lt;String&gt;) Class.forName(&quot;java.lang.String&quot;);
+		System.out.println(class1);
+		System.out.println(class2);
+		System.out.println(name);	
+	}
+	/**
+	 * 数组的字节码对象获取
+	 * 1.数组对象.getClass();
+	 * 2.数组类型.class
+	 */
+	@Test
+	public void getClass2() throws ClassNotFoundException{
+		String[] string = {&quot;帅&quot;,&quot;唱&quot;,&quot;跳&quot;};
+		Class&lt;String[]&gt; class1 = (Class&lt;String[]&gt;) string.getClass();
+		Class&lt;String[]&gt; class2 = String[].class;
+		System.out.println(class1);
+		System.out.println(class2);	
+	}
+	/**
+	 * 基本数据类型的字节码对象
+	 * 1.基本数据类型.class
+	 * 2.包装数据类型.TYPE
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void getClass3() throws ClassNotFoundException{
+		int i = 1;
+		Class&lt;Integer&gt; class1 = int.class;
+		Class&lt;Integer&gt; class2 =Integer.TYPE;
+		System.out.println(class1);
+		System.out.println(class2);	
+	}
+	/**
+	 * Void获得字节码对象
+	 * 1.Void.class
+	 */
+	@Test
+	public void getClass4() throws ClassNotFoundException{
+		
+		Class&lt;Void&gt; class1 = Void.class;
+		Class&lt;Void&gt; class2 =Void.TYPE;
+		System.out.println(class1);
+		System.out.println(class2);
+	}
+	/**
+	 * 接口获取字节码对象
+	 * 1.接口名.class
+	 * 2.class.forName(全限定名);
+	 */
+	@Test
+	public void getClass5() throws ClassNotFoundException{
+		Class&lt;Function&gt; class1 = Function.class;
+		Class&lt;Function&gt; class2 = (Class&lt;Function&gt;) Class.forName(&quot;java.util.function.Function&quot;);
+		System.out.println(class1);
+		System.out.println(class2);		
+	}
+}
+	运行结果：
+class java.lang.String
+class java.lang.String
+class java.lang.String
+class [Ljava.lang.String;
+class [Ljava.lang.String;
+int
+int
+class java.lang.Void
+void
+interface java.util.function.Function
+interface java.util.function.Function
+</code></pre>
+
+<h3 id="1-4反射获取内容信息">1.4反射获取内容信息</h3>
+
+<h4 id="获取流程总结">获取流程总结：</h4>
+
+<p>1.都要<strong>先获取字节码对象</strong>：Class.forName(全限定名);包名+类名
+2.想获得的内容（构造方法：Constructor 方法：Method  字段：File）：<strong>字节码对象.get内容</strong>（参数类型.class）    注意：<strong>只能获取public修饰的内容</strong>
+3.注意如果要<strong>获取不加public修饰的内容</strong>要： 字节码对象.getDeclared内容（参数类型.class）。<strong>要在中间加上一个Declared</strong>
+4.获取私有内容时，想要使用的话要<strong>更改权限后才能使用</strong>：内容.<strong>setAccessible(true)</strong>
+5.反射中<strong>创建对象</strong>的话：构造器.<strong>newInstance</strong>(参数);  <strong>使用方法</strong>：方法.<strong>invoke</strong>(该类对象,参数)  <strong>使用字段</strong>：字段.<strong>set</strong>(该类对象,参数);</p>
+
+<h4 id="1-获得构造方法">1.获得构造方法</h4>
+
+<p><strong>获得私有化有参构造方法</strong>
+1.获得字节码对象
+2.获得构造方法：字节码对象.getDeclaredConstructor(参数类型.class);
+3.更改构造方法权限：构造方法.setAccessible(true)；
+4.通过构造方法创建对象：构造方法.newInstance（参数）;</p>
+
+<pre><code class="language-java">/**
+	 * 获得私有的有参构造方法
+	 * 1.获得参构造器： 字节码对象.getDeclaredConstructor(类型.class);
+	 * 2.更改构造器权限为‘公共的’：构造器.setAccessible(true); 
+	 * 2.创建对象：无参构造器.newInstance(参数);
+	 * @throws Exception 
+	 */
+	@Test
+	public void test2() throws Exception {
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Constructor&lt;Person&gt; constructor = class1.getDeclaredConstructor(String.class,Integer.class);
+		constructor.setAccessible(true);
+		Person newInstance = constructor.newInstance(&quot;帅&quot;,18);
+		System.out.println(newInstance);
+	}
+</code></pre>
+
+<p><strong>获得无参构造方方法</strong>
+1.获得字节码对象
+2.获得构造方法：字节码对象.getConstructor();
+3.创建对象：构造方法.newInstance（参数）;</p>
+
+<pre><code class="language-java">/**
+	 * 获得默认的无参构造方法
+	 * 字节码对象.newInstance
+	 * @throws Exception 
+	 */
+	@Test
+	public void test() throws Exception {
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Person newInstance = class1.newInstance();
+		System.out.println(newInstance);
+	}
+</code></pre>
+
+<p><strong>获得公共有参构造方法</strong>
+1.获得字节码对象
+2.获得构造方法：字节码对象.getConstructor(参数类型.class);
+3.创建对象：构造方法.newInstance（参数）;</p>
+
+<pre><code class="language-java">/**
+	 * 获得默认的有参构造方法
+	 * 1.获得有参构造器： 字节码对象.getConstructor(类型.class);
+	 * 2.创建对象：有参构造器.newInstance(参数);
+	 * @throws Exception 
+	 */
+	@Test
+	public void test1() throws Exception {
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Constructor&lt;Person&gt; constructor = class1.getConstructor(String.class);
+		Person newInstance = constructor.newInstance(&quot;帅&quot;);
+		System.out.println(newInstance);
+	}
+</code></pre>
+
+<h4 id="2-获得方法">2.获得方法</h4>
+
+<p><strong>获得私有方法</strong>
+1.获得字节码对象
+2.获得方法：字节码对象.getDeclaredMethod(方法名,参数类型字节码);
+3.更改方法权限：方法.setAccessible(true)
+4.新建对象：字节码对象.newInstance();
+5.使用方法：方法.lnvoke(对象,参数);</p>
+
+<pre><code class="language-java">/**
+	 * 获取字节码中的私有方法
+	 * 1.字节码对象
+	 * 2.获得私有方法：字节码对象.getDeclaredMethod(方法名,参数类型字节码);
+	 * 3.更改方法权限：方法.setAccessible(true)
+	 * 4.新建对象
+	 * 5.方法.invoke(对象名,参数);
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void test4() throws Exception{
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Method method = class1.getDeclaredMethod(&quot;fly&quot;, String.class);
+		method.setAccessible(true);
+		Person person = class1.newInstance();
+		method.invoke(person, &quot;帅   &quot;);
+	}
+</code></pre>
+
+<p><strong>获得公共方法</strong>
+1.获得字节码对象
+2.获得方法：字节码对象.getMethod(参数类型.class);
+3.新建对象：字节码对象.newInstance();
+4.使用方法：方法.lnvoke(对象,参数);</p>
+
+<pre><code class="language-java">/**
+	 * 获取字节码中的公共方法
+	 * 1.字节码对象
+	 * 2.获得公共方法：字节码对象.getMethod(方法名,参数类型字节码);
+	 * 3.新建对象，
+	 * 4.方法.invoke(对象名,参数);
+	 * @throws ClassNotFoundException 
+	 */
+	@Test
+	public void test3() throws Exception{
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Method method = class1.getMethod(&quot;setName&quot;, String.class);
+		Person person = class1.newInstance();
+		method.invoke(person, &quot;帅&quot;);
+		System.out.println(person);
+	}
+</code></pre>
+
+<h4 id="3-获得字段">3.获得字段</h4>
+
+<p><strong>获得私有化字段</strong>
+1.字节码对象
+2.获得字段：字节码对象.getDeclaredField(字段)
+3.更改字段权限：字段.setAccessible(true)
+4.获取对象：字节码对象.newInstance();
+5.字段.set(对象，参数);</p>
+
+<pre><code class="language-java">/**
+	 * 获取私有字段
+	 * 1.字节码对象
+	 * 2.获得私有字段：字节码对象.getDeclaredField(字段);
+	 * 3.更改方法权限：字段.setAccessible(true)
+	 * 4.新建对象
+	 * 5.字段.set(对象名,参数);
+	 */
+	@Test
+	public void test5() throws Exception{
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		Field field = class1.getDeclaredField(&quot;age&quot;);
+		field.setAccessible(true);
+		Person person = class1.newInstance();
+		field.set(person, 18);
+		System.out.println(person);
+	}
+</code></pre>
+
+<p><strong>获得公共字段</strong>
+1.字节码对象
+2.获得字段：字节码对象.getField(字段)
+3.获取对象：字节码对象.newInstance();
+4.字段.set(对象，参数);</p>
+
+<pre><code class="language-java">/**
+	 * 获取公共字段
+	 * 1.字节码对象
+	 * 2.获得公共字段：字节码对象.getField(字段);
+	 * 3.新建对象
+	 * 4.字段.set(对象名,参数);
+	 */
+	@Test
+	public void test6() throws Exception{
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		//getField必须要为公共public的字段
+		Field field = class1.getField(&quot;name&quot;);
+		Person person = class1.newInstance();
+		field.set(person, &quot;帅帅&quot;);
+		System.out.println(person);
+	}
+}
+</code></pre>
+
+<h4 id="4-获取注解">4.获取注解</h4>
+
+<p>1.获取字节码对象
+2.获取注解：字节码对象.getAnnotation(注解名.class)
+3.注解.内容</p>
+
+<pre><code class="language-java">/**
+	 * 反射获取注解内容
+	 * 1.获得字节码文件
+	 * 2.获得注解对象：字节码对象.getAnnotation
+	 * @throws Exception 
+	 *
+	 */
+	@Test
+	public void test() throws Exception {
+		Class&lt;Person&gt; class1 = (Class&lt;Person&gt;) Class.forName(&quot;cn.itsource.reflect.Person&quot;);
+		//获得注解对象
+		Vip vip = class1.getAnnotation(Vip.class);
+		String name = vip.name();
+		int level = vip.level();
+		System.out.println(name+&quot;=&quot;+level);
+	}
+</code></pre>
+
+<h2 id="2-配置文件读取">2.配置文件读取</h2>
+
+<h3 id="1-配置说明">1.配置说明</h3>
+
+<p>常用配置文件后缀：xml  properties(键值对)  yml   不同的配置文件有不同的读取方式
+配置文件的作用：可以<strong>解决硬编码问题</strong>，用来管理项目的相关配置信息。<strong>降低代码耦合性</strong></p>
+
+<h3 id="2-properties">2.Properties</h3>
+
+<p><strong>注意！！！！：文件夹要为资源文件夹否则会包空指针异常</strong></p>
+
+<p>配置文件解析读取的几种方式
+1.普通方式，自己创建文件流
+2.使用字节码生成流
+3.使用类加载器生成流： 通过字节码获得类加载器  通过线程方式获得类加载器</p>
+
+<pre><code class="language-java">import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import org.junit.Test;
+public class PropTest {
+	/*
+	 * 配置文件解析读取的几种方式 
+	 * 1.传统读取方式 自己创建文件流 
+	 * 2.利用字节码获取流 文件的路径直接是/资源文件名
+	 * 3.利用类加载器来获取流
+	 */
+	/**
+	 * 1.传统读取方式，自己创建文件流 输入账户和密码进行判断是否匹配
+	 * @throws Exception
+	 */
+	public static void getConnect(String name, String pwd) throws Exception {
+		Properties properties = new Properties();
+		FileInputStream fileInputStream = new FileInputStream(&quot;resources/login.properties&quot;);
+		properties.load(fileInputStream);
+        //getProperty(键)获取值
+		if (properties.getProperty(&quot;username&quot;).equals(name) &amp;&amp; properties.getProperty(&quot;password&quot;).equals(pwd)) {
+			System.out.println(&quot;登陆成功&quot;);
+			return;
+		}
+		System.out.println(&quot;账户密码错误&quot;);
+	}
+	/**2.利用字节码获取流   文件的路径直接是/资源文件名
+	 * @throws IOException 
+	 */
+	@Test
+	public void getConnect1() throws IOException{
+		//获得Properties
+		Properties prop = new Properties();
+		//获得当前的字节码对象：当前类.class
+		Class&lt;PropTest&gt; cls = PropTest.class;
+		//通过字节码获得流：getResourceAsStream(路径)
+		InputStream stream = cls.getResourceAsStream(&quot;/login.properties&quot;);
+		prop.load(stream);
+		System.out.println(prop.getProperty(&quot;password&quot;));
+	}
+	/**
+	 * 3.通过类加载器来获得流
+	 *		获取类加载器 1.通过字节码文件获取 2. 通过当前线程获取
+	 * @throws IOException 
+	 */
+	@Test
+	public void getConnect2() throws IOException{
+		Properties properties = new Properties();
+		/*//1.通过字节码文件获取类加载器
+		Class&lt;PropTest&gt; cls = PropTest.class;
+		ClassLoader loader = cls.getClassLoader();
+		InputStream stream = loader.getResourceAsStream(&quot;login.properties&quot;);*/
+		//通过当前线程获取类加载器
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = loader.getResourceAsStream(&quot;login.properties&quot;);
+		properties.load(stream);
+		System.out.println(properties.getProperty(&quot;username&quot;));
+	}
+}
+
+</code></pre>
+
+<h3 id="3-xml">3.XML</h3>
+
+<h4 id="xml定义">xml定义</h4>
+
+<p>可拓展的标记语言
+Document对象包含内容：  document&mdash;&mdash;-&gt;element(元素){ attr(属性),text(文档) }</p>
+
+<h4 id="xml特点">XML特点</h4>
+
+<p>1.与<strong>平台无关性</strong>
+2.XML是一种类似的树形结构，Properties：键值对形式
+3.通常作为配置文件（框架的配置文件都会使用xml）
+4.作为数据交换（与平台无关性）
+5.文档清晰，方便管理</p>
+
+<h4 id="xml解析">XML解析</h4>
+
+<p><strong>四种解析方式：</strong>
+1.SAX解析 2.DOM解析3.JAXP
+<strong>4.DOM4j和Xpath语法（最常用，掌握）</strong>故此次就讲解DOM4j操作XML文件</p>
+
+<h5 id="解析过程">解析过程</h5>
+
+<p><strong>student.xml文件</strong></p>
+
+<pre><code class="language-java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+
+&lt;class&gt; 
+  &lt;student&gt; 
+    &lt;!--这是一个注释 --&gt;  
+    &lt;name id=&quot;01&quot;&gt;帅&lt;/name&gt;  
+    &lt;age&gt;18&lt;/age&gt;  
+    &lt;sex&gt;不开森&lt;/sex&gt;
+  &lt;/student&gt;  
+  &lt;student&gt; 
+    &lt;name&gt;欢&lt;/name&gt;  
+    &lt;age&gt;17&lt;/age&gt; 
+  &lt;/student&gt; 
+&lt;/class&gt;
+
+</code></pre>
+
+<p><strong>1.DOM4j解析获取Document对象</strong>
+    1.1先创建一个SAXReader对象
+    1.2然后调用reader.read(文件)<br />
+    1.3得到dom对象</p>
+
+<pre><code class="language-java">	Document dom;
+	Element ele;
+	//文件路径
+	File file = new File(&quot;sources/Student.xml&quot;);
+	@Before
+	public void geTDom() throws Exception {
+		// 获得一个saxReader对象
+		SAXReader saxReader = new SAXReader();
+		// 获得dom对象
+		dom = saxReader.read(file);
+		// 获得根节点
+		ele = dom.getRootElement();
+	}
+</code></pre>
+
+<p><strong>DOM4j和Xpath对xml文件进行增删改查</strong></p>
+
+<pre><code class="language-java">public class Dom4jTest {
+	File file = new File(&quot;sources/Student.xml&quot;);
+	Document dom;
+	Element ele;
+	@Before
+	public void geTDom() throws Exception {
+		SAXReader reader = new SAXReader();
+		dom = reader.read(file);
+		ele = dom.getRootElement();
+	}
+	//进行回写操作，才能将内容存储到磁盘中
+	@After
+	public void flush() throws Exception {
+		//一种打印方式
+		OutputFormat print = OutputFormat.createPrettyPrint();
+		//新建一个XMLWriter对象，用来写入DOM
+		XMLWriter writer = new XMLWriter(new FileWriter(file),print);
+		writer.write(dom);
+		writer.close();
+	}
+
+	/**
+	 * 查找XML中的所有name
+	 */
+	@Test
+	public void select() {
+		//查找方法配合Xpath路径
+		List list = dom.selectNodes(&quot;/class/student/name&quot;);
+		for (Object object : list) {
+			//强制转换
+			Element e = (Element)object;
+			//getText()获得name的中的内容
+			System.out.println(e.getText());
+		}
+	
+	}
+
+	/**
+	 * 给第一个Student之中增加一个sex
+	 */
+	@Test
+	public void add() {
+		//将获得的内容强制转换为Element更利于我们进行操作
+		Element node = (Element)dom.selectSingleNode(&quot;/class/student[1]&quot;);
+		//在Student中添加一个元素为”sex“，文本内容为”不开森“
+		node.addElement(&quot;sex&quot;).setText(&quot;不开森&quot;);
+	}
+
+	/**
+	 * 修改sex中内容
+	 */
+	@Test
+	public void update() {
+	//将获得的内容强制转换为Element更利于我们进行操作
+		Element ele = (Element) dom.selectSingleNode(&quot;class/student[1]/sex&quot;);
+		//直接使用setText设置文本内容
+		ele.setText(&quot;你好&quot;);
+	}
+
+	/**
+	 * DELECT内容
+	 */
+	@Test
+	public void delect() {
+		//将获得的内容强制转换为Element更利于我们进行操作
+		Element node = (Element) dom.selectSingleNode(&quot;class/student/sex&quot;);
+		//在进行删除操作的时候，要得到上一级的节点，才能删除该节点
+		node.getParent().remove(node);
+	}
+}
+
+</code></pre>
+
+<h4 id="xml解析注意事项与总结">XML解析注意事项与总结</h4>
+
+<p>1.注意xml和代码的编码格式是否一致！！！推荐在新建class文件的时候选择UTF-8编码格式
+2.Dom4j如果不和Xpath一起使用的话，只能一层一层的节点读取下去。所有推荐和Xpath一起使用
+3.在进行删除操作的时候，要使用父类的节点对子类节点删除
+4.操作的本质就是：首先得到一个<strong>Document对象</strong>，然后使用<strong>对象和Xpath语法</strong>去得到你想进行<strong>操作的节点</strong>。然后对<strong>节点中的内容进行增删改查</strong></p>
+
+                        </div>
+
+                        <div class="post-meta meta-tags">
+                            
+                            <ul class="clearfix">
+                                
+                                <li><a href="/tags/%E5%8F%8D%E5%B0%84">反射</a></li>
+                                
+                                <li><a href="/tags/%E6%80%BB%E7%BB%93">总结</a></li>
+                                
+                                <li><a href="/tags/xml%E6%96%87%E4%BB%B6">xml文件</a></li>
+                                
+                            </ul>
+                            
+                        </div>
+                        
+                    </article>
+                    
+    
+
+    
+    
+                </div>
+            </div>
+            <div id="secondary">
+    <section class="widget">
+        <form id="search" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://hiaugest.github.io/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%AD/" title="HUGO  将个人博客部署到GitHub中">HUGO  将个人博客部署到GitHub中</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/" title="JAVA基础面试题汇总">JAVA基础面试题汇总</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/HUGO-4%E5%8F%A5%E4%BB%A3%E7%A0%81%E8%AE%A9%E4%BD%A0%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" title="HUGO  4句代码让你搭建个人博客">HUGO  4句代码让你搭建个人博客</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/String%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/" title="String创建对象问题">String创建对象问题</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F/" title="枚举实现单利模式">枚举实现单利模式</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVAEE-Servlet/" title="JAVAEE Servlet">JAVAEE Servlet</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/" title="JDBC连接与事物介绍">JDBC连接与事物介绍</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" title="JAVA反射与配置XML文件操作">JAVA反射与配置XML文件操作</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/" title="IO流总结">IO流总结</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/posts/java8-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="Java8  Lambda表达式">Java8  Lambda表达式</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">hugo搭建博客(2)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/java%E5%9F%BA%E7%A1%80/">java基础(9)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结(4)</a>
+    </li>
+    
+    <li>
+        <a href="https://hiaugest.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/">面试相关(5)</a>
+    </li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://hiaugest.github.io/tags/IO%E6%B5%81/">IO流</a>
+    
+    <a href="https://hiaugest.github.io/tags/JDBC/">JDBC</a>
+    
+    <a href="https://hiaugest.github.io/tags/Lambda/">Lambda</a>
+    
+    <a href="https://hiaugest.github.io/tags/Map/">Map</a>
+    
+    <a href="https://hiaugest.github.io/tags/hugo/">hugo</a>
+    
+    <a href="https://hiaugest.github.io/tags/java8%E6%96%B0%E7%89%B9%E6%80%A7/">java8新特性</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E5%9F%BA%E7%A1%80/">java基础</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95/">java面试</a>
+    
+    <a href="https://hiaugest.github.io/tags/java%E9%9D%A2%E8%AF%95%E9%A2%98/">java面试题</a>
+    
+    <a href="https://hiaugest.github.io/tags/servlet/">servlet</a>
+    
+    <a href="https://hiaugest.github.io/tags/xml%E6%96%87%E4%BB%B6/">xml文件</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E5%8F%8D%E5%B0%84/">反射</a>
+    
+    <a href="https://hiaugest.github.io/tags/%E6%80%BB%E7%BB%93/">总结</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e" title="Android Gradle权威指南">Android Gradle权威指南</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="http://mirrors.flysnow.org/" title="常用开发工具CDN镜像">常用开发工具CDN镜像</a>
+        </li>
+        
+    </ul>
+</section>
+
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://hiaugest.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2019 <a href="https://hiaugest.github.io/">八月的博客 By 八月</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/rujews/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        
+        (function () {
+            $("pre code").parent().addClass("line-numbers")
+        }());
+
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script type="text/javascript" src="/js/prism.js" async="true"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src="/js/totop.js?v=0.0.0" async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'GA ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+</body>
+</html>

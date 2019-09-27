@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JDBC on 八月的博客</title>
+    <link>https://hiaugest.github.io/tags/JDBC/</link>
+    <description>Recent content in JDBC on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:07:33 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/tags/JDBC/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JDBC连接与事物介绍</title>
+      <link>https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Thu, 26 Sep 2019 16:07:33 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/</guid>
+      <description>@[toc]
+JDBC连接 1.JDBC介绍 定义 是一个接口（规范），sun公司没有将他实现出来。而是各大数据库去实现 作用 1.可以将数据的持久化储存起来 2.用来连接数据库
+2.JDBC连接步骤 贾琏欲执事 1.加载驱动 : 通过反射来加载驱动 Class.forName(&amp;ldquo;com.mysql.jdbc.Driver&amp;rdquo;);//Driver路径 2.</description>
+    </item>
+    
+  </channel>
+</rss>

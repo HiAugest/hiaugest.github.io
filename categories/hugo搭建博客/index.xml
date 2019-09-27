@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo搭建博客 on 八月的博客</title>
+    <link>https://hiaugest.github.io/categories/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+    <description>Recent content in hugo搭建博客 on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 27 Sep 2019 13:10:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/categories/hugo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HUGO  将个人博客部署到GitHub中</title>
+      <link>https://hiaugest.github.io/posts/%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%AD/</link>
+      <pubDate>Fri, 27 Sep 2019 13:10:10 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/%E5%B0%86%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitHub%E4%B8%AD/</guid>
+      <description>上一篇内容我们已经解决了,如何创建一个个人博客.下面是链接 https://blog.csdn.net/ChengHuanHuaning/article/details/101427654 现在我们来将已经创建好的博客内容部署到GitHub中.这样就可以直接通过占点分享出去.
+在GitHub中新建一个库 1.右上角,点击&amp;rsquo;+号选择新建一个库 2.输入你的库名.注意!!!! 你的库名要与你用户名相同并且小写 将本地博客上传至库中 1.使用命令,hugo-grapes是下载好的项目模块名称 url是你自己新建库的名称 hugo --theme=hugo-grapes --buildDrafts --baseUrl=&amp;quot;https://hiaugest.github.io/&amp;quot; 2.</description>
+    </item>
+    
+    <item>
+      <title>HUGO  4句代码让你搭建个人博客</title>
+      <link>https://hiaugest.github.io/posts/HUGO-4%E5%8F%A5%E4%BB%A3%E7%A0%81%E8%AE%A9%E4%BD%A0%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Thu, 26 Sep 2019 16:10:10 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/HUGO-4%E5%8F%A5%E4%BB%A3%E7%A0%81%E8%AE%A9%E4%BD%A0%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>HUGO搭建个人博客 这是我在网上看的其他人的博客和一些up主的视频,通过他们的分享成功搭建好了的案例.在这里我也进行总结一次,方便以后使用.也是方便大家做一个参考.如果文章含有错误,麻烦各位大佬指出了一下,免得误导了其他人.谢谢. 其实搭建这个个人博客,除去切换目录和显示文件.只需要4个命令行语句就可以完成了.拭目以待
+搭建前准备 下载HUGO 官方网站:https://gohugo.io 官方安装文档:https://gohugo.io/getting-started/quick-start/ HUGO安装包下载地址:https://github.com/gohugoio/hugo/releases进入网站,选择自己系统对应的安装包.目前我的版本是v0.58.3.. 解压在一个文件夹下:如我的在我的文件下:D:\Blogger\hugo中 去配置hugo文件夹的的环境变量如:path:D:\Blogger\hugo 验证Hugo是否安装成功,命令行中：hugo version/hugo help 下载git工具 官方地址:https://git-scm.</description>
+    </item>
+    
+  </channel>
+</rss>

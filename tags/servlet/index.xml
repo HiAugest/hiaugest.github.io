@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>servlet on 八月的博客</title>
+    <link>https://hiaugest.github.io/tags/servlet/</link>
+    <description>Recent content in servlet on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:08:17 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/tags/servlet/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAVAEE Servlet</title>
+      <link>https://hiaugest.github.io/posts/JAVAEE-Servlet/</link>
+      <pubDate>Thu, 26 Sep 2019 16:08:17 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVAEE-Servlet/</guid>
+      <description>servlet 定义 是一个规范，需要服务器厂商去实现
+Servlet的生命周期（从出生到销毁） 构造方法 &amp;ndash;&amp;gt; init方法 &amp;ndash;&amp;gt; service【每次请求都会执行】 &amp;ndash;&amp;gt; destory【正常关闭才执行】 出生（实例化和初始化）：实质是由servlet容器去调用构造器，调用init方法？ 什么时候调用？默认实在第一次访问的时候调用 只调用一次 服务：servlet容器通过上面创建的对象去调用service方法,什么时候调用？发送请求的时候 调用多次 销毁：servlet容器调用destroy方法，服务器正常关闭的时候调用</description>
+    </item>
+    
+  </channel>
+</rss>

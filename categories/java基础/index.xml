@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java基础 on 八月的博客</title>
+    <link>https://hiaugest.github.io/categories/java%E5%9F%BA%E7%A1%80/</link>
+    <description>Recent content in java基础 on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:11:30 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/categories/java%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAVA基础面试题汇总</title>
+      <link>https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</link>
+      <pubDate>Thu, 26 Sep 2019 16:11:30 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98%E6%B1%87%E6%80%BB/</guid>
+      <description>[TOC]
+面试题汇总 JAVAWeb部分 1.cs与bs（面试题） cs（client/server）架构：QQ 优点：服务器稳定，安全性高 缺点：必须下载客户端，更新需要重新下载 bs（broswer/server）架构：淘宝 优点：不需下载客户端，无需更新 缺点：服务器不稳定，安全性不高
+2.post与get区别（面试题） get请求： 参数提交到url地址栏上，不安全，数据量有大小限制（2kb左右） 使用情况：1.表单中默认提交2.地址栏中直接输入地址3.超链接 post请求： 参数在数据包中(http协议) ，相对安全，对提交的数据没有大小限制（） 使用情况：设置表单提交方式的时候</description>
+    </item>
+    
+    <item>
+      <title>String创建对象问题</title>
+      <link>https://hiaugest.github.io/posts/String%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 26 Sep 2019 16:09:25 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/String%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E9%97%AE%E9%A2%98/</guid>
+      <description>1.String创建对象问题 1.1 字符串常量池 定义：jvm针对字符串存储的一个特定内存区域。且里面内容都具有唯一性
+1.2 创建对象单个说明 (1).String s = &amp;ldquo;abc&amp;rdquo; 在创建这个对象时,会在常量池中看有没有abc这个字符串；如果没有 此时还会在常量池中创建一个；如果有 则不创建。 (2).String s1 = &amp;ldquo;a&amp;rdquo; +&amp;ldquo;b&amp;rdquo;+&amp;ldquo;c&amp;rdquo; 在字符串常量相加时，编译器编译时产生的字节码，会把如 &amp;ldquo;a&amp;rdquo; +&amp;ldquo;b&amp;rdquo;+&amp;ldquo;c&amp;rdquo;优化为“abc”。所以只会产生一个对象 (3).</description>
+    </item>
+    
+    <item>
+      <title>枚举实现单利模式</title>
+      <link>https://hiaugest.github.io/posts/%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F/</link>
+      <pubDate>Thu, 26 Sep 2019 16:08:53 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E5%8D%95%E5%88%A9%E6%A8%A1%E5%BC%8F/</guid>
+      <description>枚举实现单利模式代码 为什么不使用常规的模式实现单利 常用方式:饿汉式、懒汉式、静态内部类、双重校验锁 以上方式都存在缺陷:
+1.利用反射的方式来实例化多个不同的实例 2.在序列化和反序列换的时候也会出现多个不同的实例
+使用枚举实现单利的原因 单利模式的定义:保证一个类仅有一个实例，并提供一个访问它的全局访问点 枚举: 代码简单 枚举默认就是单利且线程安全 枚举单例可以自己处理序列化
+使用枚举实现单利的好处: Joshua Bloch大神《Effective Java》中有提到，因为其 1.</description>
+    </item>
+    
+    <item>
+      <title>JAVAEE Servlet</title>
+      <link>https://hiaugest.github.io/posts/JAVAEE-Servlet/</link>
+      <pubDate>Thu, 26 Sep 2019 16:08:17 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVAEE-Servlet/</guid>
+      <description>servlet 定义 是一个规范，需要服务器厂商去实现
+Servlet的生命周期（从出生到销毁） 构造方法 &amp;ndash;&amp;gt; init方法 &amp;ndash;&amp;gt; service【每次请求都会执行】 &amp;ndash;&amp;gt; destory【正常关闭才执行】 出生（实例化和初始化）：实质是由servlet容器去调用构造器，调用init方法？ 什么时候调用？默认实在第一次访问的时候调用 只调用一次 服务：servlet容器通过上面创建的对象去调用service方法,什么时候调用？发送请求的时候 调用多次 销毁：servlet容器调用destroy方法，服务器正常关闭的时候调用</description>
+    </item>
+    
+    <item>
+      <title>JDBC连接与事物介绍</title>
+      <link>https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/</link>
+      <pubDate>Thu, 26 Sep 2019 16:07:33 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E4%BA%8B%E7%89%A9%E4%BB%8B%E7%BB%8D/</guid>
+      <description>@[toc]
+JDBC连接 1.JDBC介绍 定义 是一个接口（规范），sun公司没有将他实现出来。而是各大数据库去实现 作用 1.可以将数据的持久化储存起来 2.用来连接数据库
+2.JDBC连接步骤 贾琏欲执事 1.加载驱动 : 通过反射来加载驱动 Class.forName(&amp;ldquo;com.mysql.jdbc.Driver&amp;rdquo;);//Driver路径 2.</description>
+    </item>
+    
+    <item>
+      <title>JAVA反射与配置XML文件操作</title>
+      <link>https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Thu, 26 Sep 2019 16:06:41 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</guid>
+      <description>反射与对配置(xml)文件操作 1.反射 1.1定义 在程序运行的时候，通过字节码文件去获取类中的信息（全部公/私信息：构造方法，方法，字段，注解）
+1.2优缺点 优点 1.功能强大，灵活 2.框架底层的设计实现 缺点 破坏封装.效率一般
+1.3获取字节码文件 针对不同的信息有不同的获取方式，接口和类的字节码文件一般选择：Class.forName(全限定名);包名+类名 1.类获得字节码对象 1.对象名.getClass(); 2.</description>
+    </item>
+    
+    <item>
+      <title>IO流总结</title>
+      <link>https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 26 Sep 2019 16:05:49 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/IO%E6%B5%81%E6%80%BB%E7%BB%93/</guid>
+      <description>IO流 1.大致分类 根据方向(输入 输出）单位(字符 子节）可以分为： 字节流：字节输入流(FileInputStream) 字节输出流(FileOutputStream) 字符流：字符输入流(FileReader) 字符输出流(FileWriter)
+作为这两个方法的衍生和为他们功能的补充还添加了： 转换流：字节转换为字符(InputStreamReader) 字符转换为字节(OutputStreamWriter) 缓冲流：与字节流和字符流一一对应，为字节输入缓冲流，字节输出缓冲流，字符输入缓冲流，字符输出缓冲流
+2.IO流的基础使用 2.</description>
+    </item>
+    
+    <item>
+      <title>Java8  Lambda表达式</title>
+      <link>https://hiaugest.github.io/posts/java8-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</link>
+      <pubDate>Thu, 26 Sep 2019 16:05:12 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/java8-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/</guid>
+      <description>Lambda使用前提 在java8的新特性中，接口中的方法可以有方法主体，但必须要使用static修饰或default修饰。由此衍生出了一个新的规则：函数式接口 函数式接口： 当接口中有且只有一个抽象方法，但可以有其他的方法 注解：@FunctionInterface 表示该接口为函数式接口，只能由一个抽象方法
+Lambda表达式 1.作用 1.简化代码，使代码异常简洁：可以非常优雅的把“一块代码”赋给了一个变量 2.相当于匿名内部类的简写，但不会生成字节码文件
+2语法结构 接口名 变量名 = （参数类型 参数名） -&amp;gt; {功能语句};</description>
+    </item>
+    
+    <item>
+      <title>各种Map之间的区别</title>
+      <link>https://hiaugest.github.io/posts/%E5%90%84%E7%A7%8DMap%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Thu, 26 Sep 2019 16:04:29 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/%E5%90%84%E7%A7%8DMap%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description>HashMap、Hashtable、ConcurrentHashMap、TreeMap区别 相同点： 1.都是map实现类，都是键值对 2.键都不能重复，可以存储任意类型任意多个数据 3.遍历要通过keySet和entrySet方法来进行遍历 不同点 HashMap线程不安全 可以以null作为key或value 效率高，适用于在Map中插入、删除和定位元素。 （最常用） TreeMap 线程不安全 key的值不能为null，保存的记录是默认使用自然排序&amp;mdash;升序(Comprable)，也可以用比较器(Comparator)进行指定排序，所以是有序的。底层基于红黑树（一种自平衡二叉查找树）。 Hashtable线程安全 不能以null作为key或value 效率较低 同步的方法 ConcurrentHashMap 线程安全 不能以null作为key或value 效率较高 同步的代码快，提高了并发效率。</description>
+    </item>
+    
+  </channel>
+</rss>

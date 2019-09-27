@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>xml文件 on 八月的博客</title>
+    <link>https://hiaugest.github.io/tags/xml%E6%96%87%E4%BB%B6/</link>
+    <description>Recent content in xml文件 on 八月的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 26 Sep 2019 16:06:41 +0800</lastBuildDate>
+    
+	<atom:link href="https://hiaugest.github.io/tags/xml%E6%96%87%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAVA反射与配置XML文件操作</title>
+      <link>https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</link>
+      <pubDate>Thu, 26 Sep 2019 16:06:41 +0800</pubDate>
+      
+      <guid>https://hiaugest.github.io/posts/JAVA%E5%8F%8D%E5%B0%84%E4%B8%8E%E9%85%8D%E7%BD%AEXML%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/</guid>
+      <description>反射与对配置(xml)文件操作 1.反射 1.1定义 在程序运行的时候，通过字节码文件去获取类中的信息（全部公/私信息：构造方法，方法，字段，注解）
+1.2优缺点 优点 1.功能强大，灵活 2.框架底层的设计实现 缺点 破坏封装.效率一般
+1.3获取字节码文件 针对不同的信息有不同的获取方式，接口和类的字节码文件一般选择：Class.forName(全限定名);包名+类名 1.类获得字节码对象 1.对象名.getClass(); 2.</description>
+    </item>
+    
+  </channel>
+</rss>
